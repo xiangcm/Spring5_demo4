@@ -1,0 +1,6 @@
+*.class
+*.iml
+*.war
+*.jar
+*.idea
+out
