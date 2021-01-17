@@ -2,50 +2,28 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <!--1 Stu对象的配置-->
-    <bean id="stu" class="com.xiangcm.spring5.collectiontype.Stu">
-        <!--数组类型属性注入-->
-        <property name="arrays" >
-            <array>
-                <value>java</value>
-                <value>c++</value>
-            </array>
-        </property>
-        <!--list类型属性注入-->
-        <property name="lists">
-            <list>
-                <value>张三</value>
-                <value>李四</value>
-            </list>
-        </property>
-        <!--map类型属性注入-->
-        <property name="maps">
-            <map>
-                <entry key="name" value="张三"></entry>
-                <entry key="class" value="小班"></entry>
-            </map>
-        </property>
-        <!--set类型属性注入-->
-        <property name="sets">
-            <set>
-                <value>Mysql</value>
-                <value>Java</value>
-            </set>
-        </property>
-        <!-- list类型属性注入，值为Course-->
-        <property name="courses">
-            <list>
-                <ref bean="course1"></ref>
-                <ref bean="course2"></ref>
-            </list>
-        </property>
-    </bean>
-    <bean id="course1" class="com.xiangcm.spring5.collectiontype.Course">
-        <property name="couresName" value="Spring5"></property>
-    </bean>
-    <bean id="course2" class="com.xiangcm.spring5.collectiontype.Course">
-        <property name="couresName" value="SpringBoot"></property>
-    </bean>
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--开启组件扫描
+        1 如果扫描多个包，可以逗号隔开
+        2 扫描包的上层目录
+    -->
+    <context:component-scan base-package="com.xiangcm.spring5"></context:component-scan>
+    <!--示例1
+        use-default-filters="false":表示不适用默认的filter，使用自己配置的filter
+        context:include-filter ：设置扫描那些内容
+        示例表示设置扫描对应包下的Controler注解，其他注解不扫描
+    -->
+    <context:component-scan base-package="com.xiangcm.spring5" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
+    <!--示例2
+        context:include-filter ：设置扫描那些内容
+        示例表示设置扫描对应包下的除了Controler的其他所有注解
+    -->
+    <context:component-scan base-package="com.xiangcm.spring5" use-default-filters="false">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 </beans>
