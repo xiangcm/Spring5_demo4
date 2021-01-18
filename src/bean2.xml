@@ -6,8 +6,17 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <!--开启组件扫描-->
-    <context:component-scan base-package="com.xiangcm.spring5.aop"></context:component-scan>
-    <!--开启Aspect生成代理对象-->
-    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    <!--创建对象-->
+    <bean id="book" class="com.xiangcm.spring5.aop.xml.Book"></bean>
+    <bean id="bookProxy" class="com.xiangcm.spring5.aop.xml.BookProxy"></bean>
+    <!--配置aop增强-->
+    <aop:config>
+        <!--1 配置切入点-->
+        <aop:pointcut id="point" expression="execution(* com.xiangcm.spring5.aop.xml.Book.buy(..))"/>
+        <!--2 配置切面-->
+        <aop:aspect ref="bookProxy">
+            <!--3 增强作用在具体的方法上-->
+            <aop:before method="before" pointcut-ref="point"/>
+        </aop:aspect>
+    </aop:config>
 </beans>
